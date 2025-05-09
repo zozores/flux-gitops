@@ -4,4 +4,3 @@ resources:
   - ./external-secrets
   - ./tailscale
   - ./external-dns
-  - ./kubero
