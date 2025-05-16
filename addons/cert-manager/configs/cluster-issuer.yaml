@@ -10,9 +10,9 @@ spec:
     privateKeySecretRef:
       name: cloudflare-issuer
     solvers:
-      - selector: {}
-        cloudflare:
-          email: tozores@outlook.com
-          apiTokenSecretRef:
-            name: cloudflare-api-key
-            key: apiKey
+      - dns01:
+          cloudflare:
+            email: tozores@outlook.com
+            apiTokenSecretRef:
+              name: cloudflare-api-key
+              key: apiKey
