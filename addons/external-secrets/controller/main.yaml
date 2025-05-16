@@ -31,5 +31,4 @@ spec:
   install:
     remediation:
       retries: 3
-  prune: true
   wait: true
