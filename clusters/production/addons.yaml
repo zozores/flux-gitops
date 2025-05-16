@@ -2,14 +2,72 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: addons
+  name: external-secrets-controller
   namespace: flux-system
 spec:
   interval: 5m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./addons
+  path: ./addons/external-secrets/controller
+  prune: true
+  wait: true
+  timeout: 5m0s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-secrets-configs
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: external-secrets-controller
+      kind: Kustomization
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./addons/external-secrets/configs
+  prune: true
+  wait: true
+  timeout: 5m0s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: tailscale
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: external-secrets-controller
+      kind: Kustomization
+    - name: external-secrets-configs
+      kind: Kustomization
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./addons/tailscale
+  prune: true
+  wait: true
+  timeout: 5m0s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: external-dns
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: external-secrets-controller
+      kind: Kustomization
+    - name: external-secrets-configs
+      kind: Kustomization
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./addons/external-dns
   prune: true
   wait: true
   timeout: 5m0s
