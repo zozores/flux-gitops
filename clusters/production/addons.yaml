@@ -22,7 +22,6 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-controller
-      kind: Kustomization
   interval: 5m0s
   sourceRef:
     kind: GitRepository
@@ -40,9 +39,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-controller
-      kind: Kustomization
     - name: external-secrets-configs
-      kind: Kustomization
   interval: 5m0s
   sourceRef:
     kind: GitRepository
@@ -60,9 +57,7 @@ metadata:
 spec:
   dependsOn:
     - name: external-secrets-controller
-      kind: Kustomization
     - name: external-secrets-configs
-      kind: Kustomization
   interval: 5m0s
   sourceRef:
     kind: GitRepository
