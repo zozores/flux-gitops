@@ -49,10 +49,13 @@ spec:
           kubernetes.io/ingress.class: nginx
           cert-manager.io/cluster-issuer: cloudflare
         hosts:
-          - host: grafana.tao.tec.br
-            paths:
-              - /
+          - grafana.tao.tec.br
+        path: /
         tls:
           - hosts:
               - grafana.tao.tec.br
             secretName: grafana-tls
+        persistence:
+          enabled: true
+          size: 10Gi
+          storageClassName: local-path
