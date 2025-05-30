@@ -48,8 +48,9 @@ spec:
           cert-manager.io/cluster-issuer: cloudflare
           external-dns.alpha.kubernetes.io/target: "137.131.161.90"
         hosts:
-          - memos.tao.tec.br
-        path: /
+          - host: memos.tao.tec.br
+            paths:
+              - path: /
         tls:
           - hosts:
               - memos.tao.tec.br
