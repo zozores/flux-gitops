@@ -22,7 +22,7 @@ spec:
   releaseName: cnpg
   chart:
     spec:
-      chart: cnpg/cloudnative-pg
+      chart: cloudnative-pg
       version: 0.24.0
       sourceRef:
         kind: HelmRepository
