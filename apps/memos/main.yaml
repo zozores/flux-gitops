@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: memos
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: memos
+  namespace: memos
+spec:
+  interval: 5m
+  url: https://charts.gabe565.com
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: memos
+  namespace: memos
+spec:
+  releaseName: memos
+  chart:
+    spec:
+      chart: memos
+      version: 0.17.0
+      sourceRef:
+        kind: HelmRepository
+        name: memos
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    image:
+      tag: 0.24.3
+    persistence:
+      data:
+        enabled: true
+        size: 1Gi
+        storageClass: local-path
+    ingress:
+      main:
+        enabled: true
+        annotations:
+          kubernetes.io/ingress.class: traefik
+          cert-manager.io/cluster-issuer: cloudflare
+          external-dns.alpha.kubernetes.io/target: "137.131.161.90"
+        hosts:
+          - memos.tao.tec.br
+        path: /
+        tls:
+          - hosts:
+              - memos.tao.tec.br
+            secretName: memos-tls
+    
