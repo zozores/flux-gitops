@@ -1,0 +1,113 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: miniflux
+---
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: miniflux-admin-password
+  namespace: miniflux
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: infisical
+  target:
+    name: miniflux-admin-password
+  data:
+    - secretKey: password
+      remoteRef:
+        key: miniflux_admin_password
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: miniflux-db
+  namespace: miniflux
+spec:
+  interval: 5m
+  url: https://cloudnative-pg.github.io/charts
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: miniflux-db
+  namespace: miniflux
+spec:
+  releaseName: miniflux-db
+  chart:
+    spec:
+      chart: cnpg/cluster
+      version: 0.3.1
+      sourceRef:
+        kind: HelmRepository
+        name: miniflux-db
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    nameOverride: miniflux-db
+    type: postgresql
+    mode: standalone
+    version:
+      postgresql: "16"
+    cluster:
+      instances: 1
+    backups:
+      enabled: false
+---
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: HelmRepository
+metadata:
+  name: miniflux-app
+  namespace: miniflux
+spec:
+  interval: 5m
+  url: https://charts.wieland.tech
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: miniflux-app
+  namespace: miniflux
+spec:
+  releaseName: miniflux-app
+  chart:
+    spec:
+      chart: hajowieland/miniflux
+      version: 1.0.0
+      sourceRef:
+        kind: HelmRepository
+        name: miniflux-app
+  interval: 5m
+  install:
+    remediation:
+      retries: 3
+  values:
+    ingress:
+      enabled: true
+      className: traefik
+      annotations:
+        cert-manager.io/cluster-issuer: cloudflare
+        external-dns.alpha.kubernetes.io/target: "137.131.161.90"
+      hosts:
+        - host: news.tao.tec.br
+          paths:
+            - path: /
+      tls:
+        - hosts:
+            - news.tao.tec.br
+          secretName: miniflux-tls
+    adminSecret:
+      enabled: true
+      secretName: miniflux-admin-password
+      secretKey: password
+    postgresSecret:
+      enabled: true
+      secretName: miniflux-db-app
+    env:
+      CLEANUP_ARCHIVE_READ_DAYS: 7
+      CLEANUP_ARCHIVE_UNREAD_DAYS: 7
+      CLEANUP_REMOVE_SESSIONS_DAYS: 7
