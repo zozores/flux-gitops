@@ -4,4 +4,3 @@ resources:
   - namespace.yaml
   - https://raw.githubusercontent.com/kubero-dev/kubero-operator/main/config/samples/application_v1alpha1_kuberoprometheus.yaml
   - https://raw.githubusercontent.com/kubero-dev/kubero-operator/main/deploy/operator.yaml
-  - ui.yaml
