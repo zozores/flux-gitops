@@ -119,3 +119,24 @@ spec:
   prune: true
   wait: true
   timeout: 5m0s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kubero
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cert-manager-controller
+    - name: cert-manager-configs
+    - name: external-dns
+    - name: ingress-nginx
+    - name: tailscale
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./addons/kubero
+  prune: true
+  wait: true
+  timeout: 5m0s
