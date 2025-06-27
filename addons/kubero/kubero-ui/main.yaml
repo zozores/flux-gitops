@@ -10,6 +10,9 @@ spec:
   target:
     name: kubero-secrets
   data:
+    - secretKey: KUBERO_USERS
+      remoteRef:
+        key: kubero_users    
     - secretKey: KUBERO_WEBHOOK_SECRET
       remoteRef:
         key: kubero_webhook_secret
