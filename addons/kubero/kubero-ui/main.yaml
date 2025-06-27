@@ -38,7 +38,8 @@ spec:
     tag: "latest"
   imagePullSecrets: []
   ingress:
-    annotations: {}
+    annotations:
+      cert-manager.io/cluster-issuer: cloudflare
     className: "nginx"
     enabled: true
     hosts:
