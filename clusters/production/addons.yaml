@@ -136,7 +136,29 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./addons/kubero-operator
+  path: ./addons/kubero/kubero-operator
+  prune: true
+  wait: true
+  timeout: 5m0s
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: kubero-prometheus
+  namespace: flux-system
+spec:
+  dependsOn:
+    - name: cert-manager-controller
+    - name: cert-manager-configs
+    - name: external-dns
+    - name: ingress-nginx
+    - name: tailscale
+    - name: kubero-operator
+  interval: 5m0s
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+  path: ./addons/kubero/kubero-prometheus
   prune: true
   wait: true
   timeout: 5m0s
@@ -154,11 +176,12 @@ spec:
     - name: ingress-nginx
     - name: tailscale
     - name: kubero-operator
+    - name: kubero-prometheus
   interval: 5m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./addons/kubero-ui
+  path: ./addons/kubero/kubero-ui
   prune: true
   wait: true
   timeout: 5m0s
