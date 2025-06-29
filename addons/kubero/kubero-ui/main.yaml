@@ -13,19 +13,18 @@ spec:
     template:
       engine: v2
       data:
-        KUBERO_USERS: {{ .kubero_users | toJson }}
-  data:
-    - secretKey: KUBERO_USERS
-      remoteRef:
+        KUBERO_USERS: {{ .kubero_users | fromJson | toJson }}
+        KUBERO_WEBHOOK_SECRET: {{ .kubero_webhook_secret }}
+        KUBERO_SESSION_KEY: {{ .kubero_session_key }}
+        GITHUB_PERSONAL_ACCESS_TOKEN: {{ .github_personal_access_token }}
+  dataFrom:
+    - extract:
         key: kubero_users
-    - secretKey: KUBERO_WEBHOOK_SECRET
-      remoteRef:
+    - extract:
         key: kubero_webhook_secret
-    - secretKey: KUBERO_SESSION_KEY
-      remoteRef:
+    - extract:
         key: kubero_session_key
-    - secretKey: GITHUB_PERSONAL_ACCESS_TOKEN
-      remoteRef:
+    - extract:
         key: github_personal_access_token
 ---
 apiVersion: application.kubero.dev/v1alpha1
