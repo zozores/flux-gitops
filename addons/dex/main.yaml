@@ -67,7 +67,7 @@ spec:
       staticClients:
       - id: kubero
         redirectURIs:
-        - 'https://kubero.zozo.pro.br/api/auth/oauth2/callback'
+        - 'https://kubero.zozo.pro.br'
         name: 'Kubero'
         secretEnv: KUBERO_CLIENT_SECRET
 
