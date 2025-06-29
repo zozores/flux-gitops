@@ -90,7 +90,7 @@ spec:
         external-dns.alpha.kubernetes.io/target: 137.131.161.90
       hosts:
         - host: sso.zozo.pro.br
-      paths:
+          paths:
         - path: /
           pathType: ImplementationSpecific
       tls:

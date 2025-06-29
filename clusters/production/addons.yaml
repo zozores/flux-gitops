@@ -195,6 +195,7 @@ spec:
     - name: tailscale
     - name: kubero-operator
     - name: kubero-prometheus
+    - name: dex
   interval: 5m0s
   sourceRef:
     kind: GitRepository
