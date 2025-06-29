@@ -19,9 +19,9 @@ spec:
     - secretKey: GITHUB_PERSONAL_ACCESS_TOKEN
       remoteRef:
         key: github_personal_access_token
-    - secretKey: GITHUB_CLIENT_SECRET
+    - secretKey: OAUTH2_CLIENT_SECRET
       remoteRef:
-        key: github_client_secret
+        key: kubero_client_secret
 ---
 apiVersion: application.kubero.dev/v1alpha1
 kind: Kubero
@@ -93,19 +93,19 @@ spec:
     sessionKey: "ckyY8jBeJ7I1mn"
     auth:
       github:
-        enabled: true
-        id: "Ov23liaz1fbpkzxMn24o"
-        secret: ""
-        callbackUrl: "https://kubero.zozo.pro.br/api/auth/github/callback"
-        org: "treinatec"
-      oauth2:
         enabled: false
-        name: ""
         id: ""
-        authUrl: ""
-        tokenUrl: ""
         secret: ""
         callbackUrl: ""
+        org: ""
+      oauth2:
+        enabled: true
+        name: "dex"
+        id: "kubero"
+        authUrl: "https://sso.zozo.pro.br/dex/auth"
+        tokenUrl: "https://sso.zozo.pro.br/dex/token"
+        secret: ""
+        callbackUrl: "https://kubero.zozo.pro.br/api/auth/oauth2/callback"
         scopes: ""
     auditLogs:
       enabled: false
