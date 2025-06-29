@@ -9,10 +9,16 @@ spec:
     name: infisical
   target:
     name: kubero-secrets
+    creationPolicy: Owner
+    template:
+      engine: v2
+      data:
+        KUBERO_USERS: {{ .users | fromJson | toJson }}
   data:
     - secretKey: KUBERO_USERS
       remoteRef:
-        key: kubero_users    
+        key: kubero_users
+        property: users  
     - secretKey: KUBERO_WEBHOOK_SECRET
       remoteRef:
         key: kubero_webhook_secret
@@ -99,9 +105,9 @@ spec:
         callbackUrl: ""
         org: ""
       oauth2:
-        enabled: false
-        name: ""
-        id: ""
+        enabled: true
+        name: "dex"
+        id: "dex"
         authUrl: ""
         tokenUrl: ""
         secret: ""
