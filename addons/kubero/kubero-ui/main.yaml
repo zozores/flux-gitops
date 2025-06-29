@@ -106,7 +106,7 @@ spec:
         tokenUrl: "https://sso.zozo.pro.br/dex/token"
         secret: ""
         callbackUrl: "https://kubero.zozo.pro.br/api/auth/oauth2/callback"
-        scopes: "openid"
+        scopes: "openid profile email"
     auditLogs:
       enabled: false
       storageClassName:
