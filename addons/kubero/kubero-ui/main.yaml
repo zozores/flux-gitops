@@ -13,11 +13,11 @@ spec:
     template:
       engine: v2
       data:
-        KUBERO_USERS: {{ .KUBERO_USERS | toJson }}
+        KUBERO_USERS: {{ .kubero_users | toJson }}
   data:
     - secretKey: KUBERO_USERS
       remoteRef:
-        key: kubero_users 
+        key: kubero_users
     - secretKey: KUBERO_WEBHOOK_SECRET
       remoteRef:
         key: kubero_webhook_secret
