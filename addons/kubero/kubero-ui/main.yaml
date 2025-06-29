@@ -99,7 +99,7 @@ spec:
         callbackUrl: "https://kubero.zozo.pro.br/api/auth/github/callback"
         org: "treinatec"
       oauth2:
-        enabled: true
+        enabled: false
         name: ""
         id: ""
         authUrl: ""
