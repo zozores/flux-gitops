@@ -9,23 +9,19 @@ spec:
     name: infisical
   target:
     name: kubero-secrets
-    creationPolicy: Owner
-    template:
-      engine: v2
-      data:
-        KUBERO_USERS: {{ .kubero_users | fromJson | toJson }}
-        KUBERO_WEBHOOK_SECRET: {{ .kubero_webhook_secret }}
-        KUBERO_SESSION_KEY: {{ .kubero_session_key }}
-        GITHUB_PERSONAL_ACCESS_TOKEN: {{ .github_personal_access_token }}
-  dataFrom:
-    - extract:
-        key: kubero_users
-    - extract:
+  data:
+    - secretKey: KUBERO_WEBHOOK_SECRET
+      remoteRef:
         key: kubero_webhook_secret
-    - extract:
+    - secretKey: KUBERO_SESSION_KEY
+      remoteRef:
         key: kubero_session_key
-    - extract:
+    - secretKey: GITHUB_PERSONAL_ACCESS_TOKEN
+      remoteRef:
         key: github_personal_access_token
+    - secretKey: GITHUB_CLIENT_SECRET
+      remoteRef:
+        key: github_client_secret
 ---
 apiVersion: application.kubero.dev/v1alpha1
 kind: Kubero
@@ -97,15 +93,15 @@ spec:
     sessionKey: "ckyY8jBeJ7I1mn"
     auth:
       github:
-        enabled: false
-        id: ""
+        enabled: true
+        id: "Ov23liaz1fbpkzxMn24o"
         secret: ""
-        callbackUrl: ""
-        org: ""
+        callbackUrl: "https://kubero.zozo.pro.br/api/auth/github/callback"
+        org: "treinatec"
       oauth2:
         enabled: true
-        name: "dex"
-        id: "dex"
+        name: ""
+        id: ""
         authUrl: ""
         tokenUrl: ""
         secret: ""
