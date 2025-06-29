@@ -91,8 +91,8 @@ spec:
       hosts:
         - host: sso.zozo.pro.br
           paths:
-        - path: /
-          pathType: ImplementationSpecific
+          - path: /
+            pathType: ImplementationSpecific
       tls:
         - secretName: dex-tls
           hosts:
