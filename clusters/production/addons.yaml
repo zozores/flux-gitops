@@ -123,84 +123,14 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dex
+  name: kubevela
   namespace: flux-system
 spec:
-  dependsOn:
-    - name: external-secrets-controller
-    - name: external-secrets-configs
   interval: 5m0s
   sourceRef:
     kind: GitRepository
     name: flux-system
-  path: ./addons/dex
-  prune: true
-  wait: true
-  timeout: 5m0s
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: kubero-operator
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: cert-manager-controller
-    - name: cert-manager-configs
-    - name: external-dns
-    - name: ingress-nginx
-    - name: tailscale
-  interval: 5m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./addons/kubero/kubero-operator
-  prune: true
-  wait: true
-  timeout: 5m0s
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: kubero-prometheus
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: cert-manager-controller
-    - name: cert-manager-configs
-    - name: external-dns
-    - name: ingress-nginx
-    - name: tailscale
-    - name: kubero-operator
-  interval: 5m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./addons/kubero/kubero-prometheus
-  prune: true
-  wait: true
-  timeout: 5m0s
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1
-kind: Kustomization
-metadata:
-  name: kubero-ui
-  namespace: flux-system
-spec:
-  dependsOn:
-    - name: cert-manager-controller
-    - name: cert-manager-configs
-    - name: external-dns
-    - name: ingress-nginx
-    - name: tailscale
-    - name: kubero-operator
-    - name: kubero-prometheus
-    - name: dex
-  interval: 5m0s
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
-  path: ./addons/kubero/kubero-ui
+  path: ./addons/tailscale
   prune: true
   wait: true
   timeout: 5m0s
